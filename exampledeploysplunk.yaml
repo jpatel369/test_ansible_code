@@ -1,0 +1,30 @@
+---
+- name: Deploy Splunk
+  hosts: <target_vm>
+  become: yes  # To execute tasks with elevated privileges (sudo)
+
+  tasks:
+    - name: Download Splunk
+      get_url:
+        url: "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=<splunk_version>&product=splunk&filename=splunk-<splunk_version>-Linux-x86_64.tgz&wget=true"
+        dest: /tmp/splunk-<splunk_version>-Linux-x86_64.tgz
+        validate_certs: no
+      delegate_to: localhost
+
+    - name: Extract Splunk
+      ansible.builtin.unarchive:
+        src: /tmp/splunk-<splunk_version>-Linux-x86_64.tgz
+        dest: /opt
+        remote_src: yes
+      become: yes
+
+    - name: Configure Splunk
+      template:
+        src: splunk-answers.conf.j2
+        dest: /opt/splunk/etc/system/local/answers.conf
+      become: yes
+
+    - name: Start Splunk
+      command: /opt/splunk/bin/splunk start --accept-license --answer-yes
+      become: yes
+#ansible-playbook -i <inventory_file> deploy_splunk.yml
