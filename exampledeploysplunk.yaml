@@ -28,3 +28,4 @@
       command: /opt/splunk/bin/splunk start --accept-license --answer-yes
       become: yes
 #ansible-playbook -i <inventory_file> deploy_splunk.yml
+#Configure Splunk with Jinja2 template make splunk-answers.conf.j2 with the specific configs).
