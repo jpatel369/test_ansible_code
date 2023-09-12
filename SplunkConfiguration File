@@ -1,0 +1,18 @@
+# Splunk Answers Configuration File
+
+# Specify the default Splunk admin username and password.
+admin_password = {{ splunk_admin_password }}
+
+# Enable the Splunk web interface.
+enableSplunkWebSSL = 1
+
+# Set the web port for the Splunk web interface.
+httpport = 8000
+
+# Set the Splunk management port.
+mgmtHostPort = 8089
+
+# Set the Splunk receiving and indexing port.
+receiver_port = 9997
+
+#ini Jinja2 file
